@@ -30,10 +30,10 @@ function ViewProducts() {
       });
   
       if (response.ok) {
-        alert("Product archived successfully!");
+        alert("Product deleted successfully!");
         
       } else {
-        alert("Archiving failed.");
+        alert("Deletion failed.");
       }
     } catch (error) {
       console.error("Archive error:", error);
@@ -55,7 +55,7 @@ function ViewProducts() {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Price ($)</th>
+              <th>Price (₱)</th>
               <th>Quantity</th>
               <th>Volume</th>
               <th>Actions</th>

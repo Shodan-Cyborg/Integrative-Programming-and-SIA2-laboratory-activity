@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Products;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Symfony\Component\Console\Input\Input;
 
 class ProductController extends Controller
@@ -16,7 +15,7 @@ class ProductController extends Controller
     {
         $products = Products::where("status", 1)->get();
         return response()->json([
-            "products"=> $products,
+            "products" => $products,
         ]);
     }
 
@@ -24,16 +23,16 @@ class ProductController extends Controller
     {
         $products = new Products();
 
-        $products->product_name = $request->input("product_name");
-        $products->product_price = $request->input("product_price");
+        $products->product_name     = $request->input("product_name");
+        $products->product_price    = $request->input("product_price");
         $products->product_quantity = $request->input("product_quantity");
-        $products->sales_volume = $request->input("sales_volume");
+        $products->sales_volume     = $request->input("sales_volume");
 
         $products->save();
 
         return response()->json([
-            "status"=> 200,
-            "message"=> "Products Added Successfully",
+            "status"  => 200,
+            "message" => "Products Added Successfully",
         ]);
 
     }
@@ -42,36 +41,46 @@ class ProductController extends Controller
     {
         $products = Products::where("archived", 0)->get();
         return response()->json([
-            "products"=> $products,
+            "products" => $products,
         ]);
     }
 
     public function edit($product_id)
     {
         $products = Products::find($product_id);
-        if($products){
+        if ($products) {
             return response()->json([
-                "status" => 200,
-                "products" => $products
+                "status"   => 200,
+                "products" => $products,
             ]);
         }
     }
 
     public function update(Request $request, int $product_id)
     {
-        $products = Products::find($product_id);
-        $products->product_name = $request->input("product_name");
-        $products->product_price = $request->input("product_price");
+        $products                   = Products::find($product_id);
+        $products->product_name     = $request->input("product_name");
+        $products->product_price    = $request->input("product_price");
         $products->product_quantity = $request->input("product_quantity");
-        $products->sales_volume = $request->input("sales_volume");
+        $products->sales_volume     = $request->input("sales_volume");
         $products->save();
     }
 
-    public function delete($product_id){
-        $products = Products::find($product_id);
+    public function delete($product_id)
+    {
+        $products           = Products::find($product_id);
         $products->archived = 1;
         $products->save();
     }
 
+    public function search(Request $request)
+    {
+        $products = $request->input('search');
+        $result   = Products::where('product_name', 'product_price', 'product_quantity', 'sales_volume', 'like', "%{$products}%")->get();
+        return response()->json([
+            'searchList' => $result,
+            'message'    => "search successfull",
+        ]);
+    }
 
 }

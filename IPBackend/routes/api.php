@@ -24,4 +24,12 @@ Route::post('/add-product', [ProductController::class, 'store']);
 Route::get('/edit-product/{product_id}', [ProductController::class, 'edit']);
 Route::put('/update-product/{product_id}', [ProductController::class, 'update']);
 Route::put('/delete-product/{product_id}', [ProductController::class, 'delete']);
+Route::get('/search-product', [ProductController::class, 'search']);
 
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+    $request->user()->currentAccessToken()->delete();
+    return response()->json(['message' => 'Logged out']);
+});
