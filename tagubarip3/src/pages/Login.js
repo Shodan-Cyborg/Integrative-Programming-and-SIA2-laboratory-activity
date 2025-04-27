@@ -42,6 +42,10 @@ function Login() {
     }
   };
 
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -74,10 +78,17 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <button type="submit" className="btn btn-primary w-100">
+                <button type="submit" className="btn btn-primary w-100 mb-2">
                   Login
                 </button>
               </form>
+              <button
+                type="button"
+                className="btn btn-secondary w-100"
+                onClick={handleRegisterClick}
+              >
+                Register
+              </button>
             </div>
           </div>
         </div>
